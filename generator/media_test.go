@@ -38,7 +38,7 @@ func TestMediaMime(t *testing.T) {
 }
 
 func TestMediaMakeSerializers(t *testing.T) {
-	app := appGenerator{
+	app := AppGenerator{
 		Name:     "myapp",
 		Receiver: "myReceiver",
 	}

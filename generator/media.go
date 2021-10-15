@@ -79,7 +79,7 @@ func mediaParameters(orig string) string {
 	return parts[1]
 }
 
-func (a *appGenerator) makeSerializers(mediaTypes []string, known func(string) (string, bool)) (GenSerGroups, bool) {
+func (a *AppGenerator) makeSerializers(mediaTypes []string, known func(string) (string, bool)) (GenSerGroups, bool) {
 	supportsJSON := false
 	uniqueSerializers := make(map[string]*GenSerializer, len(mediaTypes))
 	uniqueSerializerGroups := make(map[string]*GenSerGroup, len(mediaTypes))
@@ -174,7 +174,7 @@ func (a *appGenerator) makeSerializers(mediaTypes []string, known func(string) (
 	return serializerGroups, supportsJSON
 }
 
-func (a *appGenerator) makeConsumes() (GenSerGroups, bool) {
+func (a *AppGenerator) makeConsumes() (GenSerGroups, bool) {
 	// builds a codegen struct from all consumes in the spec
 	return a.makeSerializers(a.Analyzed.RequiredConsumes(), func(media string) (string, bool) {
 		c, ok := knownConsumers[media]
@@ -182,7 +182,7 @@ func (a *appGenerator) makeConsumes() (GenSerGroups, bool) {
 	})
 }
 
-func (a *appGenerator) makeProduces() (GenSerGroups, bool) {
+func (a *AppGenerator) makeProduces() (GenSerGroups, bool) {
 	// builds a codegen struct from all produces in the spec
 	return a.makeSerializers(a.Analyzed.RequiredProduces(), func(media string) (string, bool) {
 		p, ok := knownProducers[media]

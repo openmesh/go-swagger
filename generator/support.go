@@ -33,7 +33,7 @@ import (
 
 // GenerateServer generates a server application
 func GenerateServer(name string, modelNames, operationIDs []string, opts *GenOpts) error {
-	generator, err := newAppGenerator(name, modelNames, operationIDs, opts)
+	generator, err := NewAppGenerator(name, modelNames, operationIDs, opts)
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,7 @@ func GenerateServer(name string, modelNames, operationIDs []string, opts *GenOpt
 
 // GenerateSupport generates the supporting files for an API
 func GenerateSupport(name string, modelNames, operationIDs []string, opts *GenOpts) error {
-	generator, err := newAppGenerator(name, modelNames, operationIDs, opts)
+	generator, err := NewAppGenerator(name, modelNames, operationIDs, opts)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func GenerateMarkdown(output string, modelNames, operationIDs []string, opts *Ge
 	}
 	MarkdownSectionOpts(opts, output)
 
-	generator, err := newAppGenerator("", modelNames, operationIDs, opts)
+	generator, err := NewAppGenerator("", modelNames, operationIDs, opts)
 	if err != nil {
 		return err
 	}
@@ -68,7 +68,7 @@ func GenerateMarkdown(output string, modelNames, operationIDs []string, opts *Ge
 	return generator.GenerateMarkdown()
 }
 
-func newAppGenerator(name string, modelNames, operationIDs []string, opts *GenOpts) (*appGenerator, error) {
+func NewAppGenerator(name string, modelNames, operationIDs []string, opts *GenOpts) (*AppGenerator, error) {
 	if err := opts.CheckOpts(); err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func newAppGenerator(name string, modelNames, operationIDs []string, opts *GenOp
 	}
 
 	apiPackage := opts.LanguageOpts.ManglePackagePath(opts.APIPackage, defaultOperationsTarget)
-	return &appGenerator{
+	return &AppGenerator{
 		Name:              opts.Name,
 		Receiver:          "o",
 		SpecDoc:           specDoc,
@@ -123,7 +123,7 @@ func newAppGenerator(name string, modelNames, operationIDs []string, opts *GenOp
 	}, nil
 }
 
-type appGenerator struct {
+type AppGenerator struct {
 	Name              string
 	Receiver          string
 	SpecDoc           *loads.Document
@@ -146,7 +146,7 @@ type appGenerator struct {
 	GenOpts           *GenOpts
 }
 
-func (a *appGenerator) Generate() error {
+func (a *AppGenerator) Generate() error {
 	app, err := a.makeCodegenApp()
 	if err != nil {
 		return err
@@ -198,7 +198,7 @@ func (a *appGenerator) Generate() error {
 	return nil
 }
 
-func (a *appGenerator) GenerateSupport(ap *GenApp) error {
+func (a *AppGenerator) GenerateSupport(ap *GenApp) error {
 	app := ap
 	if ap == nil {
 		// allows for calling GenerateSupport standalone
@@ -226,7 +226,7 @@ func (a *appGenerator) GenerateSupport(ap *GenApp) error {
 	return a.GenOpts.renderApplication(app)
 }
 
-func (a *appGenerator) GenerateMarkdown() error {
+func (a *AppGenerator) GenerateMarkdown() error {
 	app, err := a.makeCodegenApp()
 	if err != nil {
 		return err
@@ -235,7 +235,7 @@ func (a *appGenerator) GenerateMarkdown() error {
 	return a.GenOpts.renderApplication(&app)
 }
 
-func (a *appGenerator) makeSecuritySchemes() GenSecuritySchemes {
+func (a *AppGenerator) makeSecuritySchemes() GenSecuritySchemes {
 	requiredSecuritySchemes := make(map[string]spec.SecurityScheme, len(a.Analyzed.RequiredSecuritySchemes()))
 	for _, scheme := range a.Analyzed.RequiredSecuritySchemes() {
 		if req, ok := a.SpecDoc.Spec().SecurityDefinitions[scheme]; ok && req != nil {
@@ -245,7 +245,7 @@ func (a *appGenerator) makeSecuritySchemes() GenSecuritySchemes {
 	return gatherSecuritySchemes(requiredSecuritySchemes, a.Name, a.Principal, a.Receiver, a.GenOpts.PrincipalIsNullable())
 }
 
-func (a *appGenerator) makeCodegenApp() (GenApp, error) {
+func (a *AppGenerator) makeCodegenApp() (GenApp, error) {
 	log.Println("building a plan for generation")
 
 	sw := a.SpecDoc.Spec()

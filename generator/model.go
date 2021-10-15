@@ -56,7 +56,7 @@ func GenerateModels(modelNames []string, opts *GenOpts) error {
 	opts.IncludeHandler = false
 	opts.IncludeMain = false
 	opts.IncludeSupport = false
-	generator, err := newAppGenerator("", modelNames, nil, opts)
+	generator, err := NewAppGenerator("", modelNames, nil, opts)
 	if err != nil {
 		return err
 	}

@@ -396,7 +396,7 @@ func TestShared_BadFormatTemplate(t *testing.T) {
 		SkipFormat: false,
 	}
 
-	data := appGenerator{
+	data := AppGenerator{
 		Name:    "badtest",
 		Package: "wrongpkg",
 	}
@@ -463,7 +463,7 @@ func TestShared_DirectoryTemplate(t *testing.T) {
 		SkipFormat: true,
 	}
 
-	data := appGenerator{
+	data := AppGenerator{
 		Name:    "gentest",
 		Package: "stubpkg",
 	}

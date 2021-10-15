@@ -45,7 +45,7 @@ func GenerateClient(name string, modelNames, operationIDs []string, opts *GenOpt
 		return errors.New("no operations were selected")
 	}
 
-	generator := appGenerator{
+	generator := AppGenerator{
 		Name:              appNameOrDefault(specDoc, name, defaultClientName),
 		SpecDoc:           specDoc,
 		Analyzed:          analyzed,
@@ -70,7 +70,7 @@ func GenerateClient(name string, modelNames, operationIDs []string, opts *GenOpt
 }
 
 type clientGenerator struct {
-	appGenerator
+	AppGenerator
 }
 
 func (c *clientGenerator) Generate() error {

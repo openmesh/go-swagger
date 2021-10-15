@@ -516,7 +516,7 @@ func TestBuilder_Issue1703(t *testing.T) {
 	}
 	require.NoError(t, opts.EnsureDefaults())
 
-	appGen, err := newAppGenerator("x-go-type-import-bug", nil, nil, opts)
+	appGen, err := NewAppGenerator("x-go-type-import-bug", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -553,7 +553,7 @@ func TestBuilder_Issue287(t *testing.T) {
 	}
 	require.NoError(t, opts.EnsureDefaults())
 
-	appGen, err := newAppGenerator("plainTexter", nil, nil, opts)
+	appGen, err := NewAppGenerator("plainTexter", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -589,7 +589,7 @@ func TestBuilder_Issue465(t *testing.T) {
 	}
 	require.NoError(t, opts.EnsureDefaults())
 
-	appGen, err := newAppGenerator("plainTexter", nil, nil, opts)
+	appGen, err := NewAppGenerator("plainTexter", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -624,7 +624,7 @@ func TestBuilder_Issue500(t *testing.T) {
 	}
 	require.NoError(t, opts.EnsureDefaults())
 
-	appGen, err := newAppGenerator("multiTags", nil, nil, opts)
+	appGen, err := NewAppGenerator("multiTags", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -720,7 +720,7 @@ func TestGenServerIssue890_ValidationTrueFlatteningTrue(t *testing.T) {
 	// Full flattening
 	opts.FlattenOpts.Expand = false
 	opts.FlattenOpts.Minimal = false
-	appGen, err := newAppGenerator("JsonRefOperation", nil, nil, opts)
+	appGen, err := NewAppGenerator("JsonRefOperation", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -779,7 +779,7 @@ func TestGenServerIssue890_ValidationFalseFlattenTrue(t *testing.T) {
 
 	// full flattening
 	opts.FlattenOpts.Minimal = false
-	appGen, err := newAppGenerator("JsonRefOperation", nil, nil, opts)
+	appGen, err := NewAppGenerator("JsonRefOperation", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -840,7 +840,7 @@ func TestGenServerIssue890_ValidationFalseFlattenFalse(t *testing.T) {
 
 	// minimal flattening
 	opts.FlattenOpts.Minimal = true
-	_, err := newAppGenerator("JsonRefOperation", nil, nil, opts)
+	_, err := NewAppGenerator("JsonRefOperation", nil, nil, opts)
 	// if flatten is not set, expand takes over so this would resume normally
 	assert.NoError(t, err)
 }
@@ -891,7 +891,7 @@ func TestGenServerIssue890_ValidationTrueFlattenFalse(t *testing.T) {
 	// minimal flattening
 	opts.FlattenOpts.Minimal = true
 
-	_, err := newAppGenerator("JsonRefOperation", nil, nil, opts)
+	_, err := NewAppGenerator("JsonRefOperation", nil, nil, opts)
 	// now if flatten is false, expand takes over so server generation should resume normally
 	assert.NoError(t, err)
 }
@@ -959,7 +959,7 @@ func TestGenServerWithTemplate(t *testing.T) {
 
 				// minimal flattening
 				tt.opts.FlattenOpts.Minimal = true
-				_, err := newAppGenerator("JsonRefOperation", nil, nil, tt.opts)
+				_, err := NewAppGenerator("JsonRefOperation", nil, nil, tt.opts)
 				if tt.wantError {
 					require.Error(t, err)
 				} else {
@@ -1010,7 +1010,7 @@ func TestBuilder_Issue1214(t *testing.T) {
 	}
 	require.NoError(t, opts.EnsureDefaults())
 
-	appGen, e := newAppGenerator("fixture-1214", nil, nil, opts)
+	appGen, e := NewAppGenerator("fixture-1214", nil, nil, opts)
 	require.NoError(t, e)
 
 	op, e := appGen.makeCodegenApp()
@@ -1240,7 +1240,7 @@ func TestBuilder_Issue1646(t *testing.T) {
 	}
 	err := opts.EnsureDefaults()
 	require.NoError(t, err)
-	appGen, err := newAppGenerator("fixture-1646", nil, nil, opts)
+	appGen, err := NewAppGenerator("fixture-1646", nil, nil, opts)
 	require.NoError(t, err)
 
 	preCons, preConj := appGen.makeConsumes()
@@ -1283,7 +1283,7 @@ func TestGenServer_StrictAdditionalProperties(t *testing.T) {
 
 	opts.StrictAdditionalProperties = true
 
-	appGen, err := newAppGenerator("StrictAdditionalProperties", nil, nil, opts)
+	appGen, err := NewAppGenerator("StrictAdditionalProperties", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -1449,7 +1449,7 @@ func TestGenServer_2161_panic(t *testing.T) {
 	}
 	require.NoError(t, opts.EnsureDefaults())
 
-	appGen, err := newAppGenerator("inlinedSubtype", nil, nil, opts)
+	appGen, err := NewAppGenerator("inlinedSubtype", nil, nil, opts)
 	require.NoError(t, err)
 
 	op, err := appGen.makeCodegenApp()
@@ -1748,7 +1748,7 @@ func TestGenServer_1659_Principal(t *testing.T) {
 			require.NoError(t, opts.EnsureDefaults())
 			require.NoError(t, opts.setTemplates())
 
-			appGen, err := newAppGenerator(fixture.Title, nil, nil, opts)
+			appGen, err := NewAppGenerator(fixture.Title, nil, nil, opts)
 			require.NoError(t, err)
 
 			op, err := appGen.makeCodegenApp()

@@ -20,7 +20,7 @@ import (
 
 const invalidSpecExample = "../fixtures/bugs/825/swagger.yml"
 
-func testAppGenerator(t testing.TB, specPath, name string) (*appGenerator, error) {
+func testAppGenerator(t testing.TB, specPath, name string) (*AppGenerator, error) {
 	specDoc, err := loads.Spec(specPath)
 	if !assert.NoError(t, err) {
 		return nil, err
@@ -41,7 +41,7 @@ func testAppGenerator(t testing.TB, specPath, name string) (*appGenerator, error
 	opts.Spec = specPath
 	apiPackage := opts.LanguageOpts.MangleName(swag.ToFileName(opts.APIPackage), "api")
 
-	return &appGenerator{
+	return &AppGenerator{
 		Name:            appNameOrDefault(specDoc, name, "swagger"),
 		Receiver:        "o",
 		SpecDoc:         specDoc,
